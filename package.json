@@ -1,0 +1,22 @@
+{
+  "name": "sample-express-project",
+  "version": "1.0.0",
+  "description": "expressプロジェクトのディレクトリ構造を考える",
+  "main": "index.ts",
+  "scripts": {
+    "test": "vitest -- NODE_ENV=test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nobumitsu-1995/sample-express-project.git"
+  },
+  "author": "@nobumitsu-1995",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nobumitsu-1995/sample-express-project/issues"
+  },
+  "homepage": "https://github.com/nobumitsu-1995/sample-express-project#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
