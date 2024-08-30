@@ -2,7 +2,7 @@
   "name": "sample-express-project",
   "version": "1.0.0",
   "description": "expressプロジェクトのディレクトリ構造を考える",
-  "main": "index.ts",
+  "main": "src/main.ts",
   "scripts": {
     "test": "vitest -- NODE_ENV=test"
   },
