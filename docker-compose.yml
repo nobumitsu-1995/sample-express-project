@@ -12,8 +12,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     restart: always
   express:
-    build: .
+    build: 
+      dockerfile: ./Dockerfile.dev
     ports:
       - 3000:3000
     volumes:
-      - ./dist:/app/dist
+      - .:/app
+      - /app/node_modules
