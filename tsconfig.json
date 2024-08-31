@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2023",
+    "module": "CommonJS",
+    "lib": ["ES2023"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "src",
+    "paths": {
+      "@Controllers/*": ["Application/Controllers/*"],
+      "@Usecases/*": ["Application/Usecases/*"],
+      "@Entities/*": ["Domain/Entities/*"],
+      "@Repositories/*": ["Domain/Repositories/*"],
+      "@Databases/*": ["Infrastructure/Databases/*"],
+      "@Routers/*": ["Infrastructure/Routers/*"]
+    },
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}
