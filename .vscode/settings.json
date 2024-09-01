@@ -1,0 +1,11 @@
+{
+  "cSpell.words": ["tseslint"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.bracketSpacing": true,
+  "prettier.printWidth": 80,
+  "prettier.semi": false,
+  "prettier.singleAttributePerLine": true,
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2
+}
