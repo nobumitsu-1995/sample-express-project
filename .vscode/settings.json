@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["automerge", "tseslint"],
+  "cSpell.words": ["automerge", "tseslint", "Usecases"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "prettier.bracketSpacing": true,
