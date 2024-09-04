@@ -1,6 +1,7 @@
 import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import parser from '@typescript-eslint/parser'
+import boundaries from 'eslint-plugin-boundaries'
 
 export default [
   { files: ['**/*.ts'] },
@@ -38,5 +39,44 @@ export default [
         ],
       },
     ],
+  },
+  {
+    plugins: {
+      boundaries,
+    },
+    rules: {
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            {
+              from: 'src/domain/**',
+              allow: ['src/domain/**'],
+            },
+            {
+              from: 'src/application/**',
+              allow: ['src/application/**', 'src/domain/**'],
+            },
+            {
+              from: 'src/infrastructure/**',
+              allow: [
+                'src/infrastructure/**',
+                'src/application/**',
+                'src/domain/**',
+              ],
+            },
+          ],
+        },
+      ],
+      'boundaries/no-private': ['error'],
+    },
+    settings: {
+      'boundaries/elements': [
+        { type: 'domain', pattern: 'src/domain/**' },
+        { type: 'application', pattern: 'src/application/**' },
+        { type: 'infrastructure', pattern: 'src/infrastructure/**' },
+      ],
+    },
   },
 ]
