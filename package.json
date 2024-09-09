@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "build": "vite build",
     "start": "node dist/sample-express-project.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/main.ts",
@@ -22,6 +23,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "^22.5.1",
     "@types/supertest": "^6.0.2",
+    "@vitest/coverage-v8": "^2.0.5",
     "eslint": "^9.9.1",
     "eslint-plugin-boundaries": "^4.2.2",
     "husky": "^9.1.5",
