@@ -2,7 +2,7 @@
   "name": "sample-express-project",
   "version": "1.0.0",
   "scripts": {
-    "test": "vitest -- NODE_ENV=test",
+    "test": "vitest",
     "build": "vite build",
     "start": "node dist/sample-express-project.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/main.ts",
@@ -19,7 +19,9 @@
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.5.1",
+    "@types/supertest": "^6.0.2",
     "eslint": "^9.9.1",
     "eslint-plugin-boundaries": "^4.2.2",
     "husky": "^9.1.5",
