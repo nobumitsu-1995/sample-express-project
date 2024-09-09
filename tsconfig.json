@@ -15,7 +15,8 @@
       "@Databases/*": ["Infrastructure/Databases/*"],
       "@Routers/*": ["Infrastructure/Routers/*"]
     },
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["vitest/globals"]
   },
   "include": ["src/**/*", "eslint.config.mjs"],
   "exclude": ["dist", "node_modules"]
