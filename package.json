@@ -42,5 +42,8 @@
       "eslint ./src/**/*.ts --max-warnings=0 --ignore",
       "prettier --write ./src/**/*.ts"
     ]
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
