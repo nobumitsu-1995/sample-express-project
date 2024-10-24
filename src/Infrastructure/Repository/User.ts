@@ -8,13 +8,30 @@ import UserName from 'Domain/Models/Users/UserName'
 export default class UserRepository implements IUserRepository {
   private prisma = new PrismaClient()
 
-  public async findById(id: UserId): Promise<User> {
+  public async findById(id: UserId): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: { id: id.get() },
     })
 
     if (!user) {
-      throw new Error('User not found')
+      return null
+    }
+
+    return new User({
+      id: new UserId(user.id),
+      name: new UserName(user.name),
+      email: new UserEmail(user.email),
+      type: user.type,
+    })
+  }
+
+  public async findByEmail(email: UserEmail): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: email.get() },
+    })
+
+    if (!user) {
+      return null
     }
 
     return new User({
