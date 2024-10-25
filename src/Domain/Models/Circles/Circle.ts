@@ -30,7 +30,15 @@ export default class Circle {
     this.members = [...this.members, user]
   }
 
+  public withdrawal(user: UserId) {
+    this.members = this.members.filter((memberId) => memberId !== user)
+  }
+
   public getMembers(containsOwner = true) {
     return containsOwner ? [...this.members, this.owner] : this.members
+  }
+
+  public countMembers() {
+    return this.members.length
   }
 }
