@@ -1,14 +1,29 @@
 import express from 'express'
+import os from 'os'
+import cluster from 'cluster'
 
-const app = express()
-const PORT = 3000
+if (cluster.isPrimary) {
+  const numberOfCPUs = os.cpus().length
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  for (let i = 0; i < numberOfCPUs; i++) {
+    cluster.fork()
+  }
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
-})
+  cluster.on('exit', (worker, code) => {
+    console.log(`worker pid: ${worker.process.pid}`)
+    console.log(`error code: ${code}`)
+    cluster.fork()
+  })
+} else {
+  const app = express()
+  const PORT = 3000
 
-export default app
+  app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`)
+    console.log(`Worker id is running on ${cluster.worker?.id}`)
+  })
+}
