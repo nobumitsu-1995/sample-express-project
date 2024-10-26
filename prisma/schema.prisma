@@ -19,8 +19,19 @@ enum UserType {
 }
 
 model User {
-  id      String   @unique
-  email   String   @unique
-  name    String
-  type    UserType @default(normal)
+  id           String   @unique
+  email        String   @unique
+  name         String
+  type         UserType @default(normal)
+  circle       Circle?  @relation("CircleMembers", fields: [circleId], references: [id])
+  circleId     String?     @unique
+  ownedCircle  Circle?  @relation("CircleOwner")
+}
+
+model Circle {
+  id        String   @unique
+  name      String
+  ownerId   String    @unique
+  owner     User   @relation("CircleOwner", fields: [ownerId], references: [id])
+  members   User[] @relation("CircleMembers")
 }
