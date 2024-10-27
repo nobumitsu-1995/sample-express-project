@@ -19,19 +19,39 @@ enum UserType {
 }
 
 model User {
-  id           String   @unique
-  email        String   @unique
-  name         String
-  type         UserType @default(normal)
-  circle       Circle?  @relation("CircleMembers", fields: [circleId], references: [id])
-  circleId     String?     @unique
-  ownedCircle  Circle?  @relation("CircleOwner")
+  id            String          @id @unique
+  email         String          @unique
+  name          String
+  type          UserType        @default(normal)
+  circle        Circle?         @relation("CircleMembers", fields: [circleId], references: [id])
+  circleId      String?         @unique
+  ownedCircle   Circle?         @relation("CircleOwner")
+  blackLists    BlackList[]     @relation("UserBlackLists")
+  UserBlackList UserBlackList[]
 }
 
 model Circle {
-  id        String   @unique
+  id        String     @id @unique
   name      String
-  ownerId   String    @unique
-  owner     User   @relation("CircleOwner", fields: [ownerId], references: [id])
-  members   User[] @relation("CircleMembers")
+  ownerId   String     @unique
+  owner     User       @relation("CircleOwner", fields: [ownerId], references: [id])
+  members   User[]     @relation("CircleMembers")
+  blackList BlackList?
+}
+
+model BlackList {
+  id            String          @id @unique
+  circle        Circle          @relation(fields: [circleId], references: [id])
+  circleId      String          @unique
+  users         User[]          @relation("UserBlackLists")
+  UserBlackList UserBlackList[]
+}
+
+model UserBlackList {
+  userId      String
+  blackListId String
+  user        User      @relation(fields: [userId], references: [id])
+  blackList   BlackList @relation(fields: [blackListId], references: [id])
+
+  @@id([userId, blackListId])
 }
