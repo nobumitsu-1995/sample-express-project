@@ -4,6 +4,7 @@ import User from 'Domain/Models/Users/User'
 import UserEmail from 'Domain/Models/Users/UserEmail'
 import UserId from 'Domain/Models/Users/UserId'
 import UserName from 'Domain/Models/Users/UserName'
+import UserType from 'Domain/Models/Users/UserType'
 
 export default class UserRepository implements IUserRepository {
   private prisma = new PrismaClient()
@@ -54,7 +55,7 @@ export default class UserRepository implements IUserRepository {
         id: user.id.get(),
         name: user.name.get(),
         email: user.email.get(),
-        type: user.type,
+        type: user.type.get(),
       },
     })
   }
@@ -70,7 +71,7 @@ export default class UserRepository implements IUserRepository {
       id: new UserId(user.id),
       name: new UserName(user.name),
       email: new UserEmail(user.email),
-      type: user.type,
+      type: new UserType(user.type),
     })
   }
 }

@@ -1,7 +1,7 @@
 import UserEmail from './UserEmail'
 import UserId from './UserId'
 import UserName from './UserName'
-import { USER_TYPE, UserType } from './UserType'
+import UserType, { USER_TYPE } from './UserType'
 
 type UserProps = {
   id: UserId
@@ -28,10 +28,10 @@ export default class User {
   }
 
   public upgrade() {
-    this.type = USER_TYPE.premium
+    this.type = new UserType(USER_TYPE.premium)
   }
 
   public downgrade() {
-    this.type = USER_TYPE.normal
+    this.type = new UserType(USER_TYPE.normal)
   }
 }
