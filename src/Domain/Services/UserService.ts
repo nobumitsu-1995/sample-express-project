@@ -1,5 +1,5 @@
 import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
-import User from 'Domain/Models/Users/User'
+import UserEmail from 'Domain/Models/Users/UserEmail'
 
 type UserServiceProps = {
   repository: IUserRepository
@@ -11,8 +11,8 @@ export default class UserService {
     this.userRepository = repository
   }
 
-  public async Exists(user: User) {
-    const duplicatedUser = await this.userRepository.findByEmail(user.email)
+  public async DuplicateEmail(email: UserEmail) {
+    const duplicatedUser = await this.userRepository.findByEmail(email)
 
     return duplicatedUser !== null
   }
