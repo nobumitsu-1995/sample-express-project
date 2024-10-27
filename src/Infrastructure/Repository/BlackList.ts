@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 import BlackList from 'Domain/Models/Circles/BlackList/BlackList'
 import BlackListId from 'Domain/Models/Circles/BlackList/BlackListId'
 import { IBlackListRepository } from 'Domain/Models/Circles/BlackList/IBlackListRepository'
@@ -16,11 +16,7 @@ export default class BlackListRepository implements IBlackListRepository {
 
     if (!blackList) return null
 
-    return new BlackList({
-      id: new BlackListId(blackList.id),
-      circleId: new CircleId(blackList.circleId),
-      users: blackList.users.map((user) => new UserId(user.id)),
-    })
+    return this.toModel(blackList)
   }
 
   public async findByCircleId(id: CircleId): Promise<BlackList | null> {
@@ -31,11 +27,7 @@ export default class BlackListRepository implements IBlackListRepository {
 
     if (!blackList) return null
 
-    return new BlackList({
-      id: new BlackListId(blackList.id),
-      circleId: new CircleId(blackList.circleId),
-      users: blackList.users.map((user) => new UserId(user.id)),
-    })
+    return this.toModel(blackList)
   }
 
   public async save(blackList: BlackList) {
@@ -64,6 +56,16 @@ export default class BlackListRepository implements IBlackListRepository {
   public async delete(id: BlackListId) {
     await this.prisma.blackList.delete({
       where: { id: id.get() },
+    })
+  }
+
+  private toModel(
+    blackList: Prisma.BlackListGetPayload<{ include: { users: true } }>,
+  ): BlackList {
+    return new BlackList({
+      id: new BlackListId(blackList.id),
+      circleId: new CircleId(blackList.circleId),
+      users: blackList.users.map((user) => new UserId(user.id)),
     })
   }
 }

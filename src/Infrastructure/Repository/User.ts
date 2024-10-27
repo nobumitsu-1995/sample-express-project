@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
 import User from 'Domain/Models/Users/User'
 import UserEmail from 'Domain/Models/Users/UserEmail'
@@ -17,12 +17,7 @@ export default class UserRepository implements IUserRepository {
       return null
     }
 
-    return new User({
-      id: new UserId(user.id),
-      name: new UserName(user.name),
-      email: new UserEmail(user.email),
-      type: user.type,
-    })
+    return this.toModel(user)
   }
 
   public async findByEmail(email: UserEmail): Promise<User | null> {
@@ -34,12 +29,7 @@ export default class UserRepository implements IUserRepository {
       return null
     }
 
-    return new User({
-      id: new UserId(user.id),
-      name: new UserName(user.name),
-      email: new UserEmail(user.email),
-      type: user.type,
-    })
+    return this.toModel(user)
   }
 
   public async findByIds(ids: UserId[]): Promise<User[]> {
@@ -47,29 +37,13 @@ export default class UserRepository implements IUserRepository {
       where: { id: { in: ids.map((id) => id.get()) } },
     })
 
-    return users.map(
-      (user) =>
-        new User({
-          id: new UserId(user.id),
-          name: new UserName(user.name),
-          email: new UserEmail(user.email),
-          type: user.type,
-        }),
-    )
+    return users.map((user) => this.toModel(user))
   }
 
   public async findAll(): Promise<User[]> {
     const users = await this.prisma.user.findMany()
 
-    return users.map(
-      (user) =>
-        new User({
-          id: new UserId(user.id),
-          name: new UserName(user.name),
-          email: new UserEmail(user.email),
-          type: user.type,
-        }),
-    )
+    return users.map((user) => this.toModel(user))
   }
 
   public async save(user: User): Promise<void> {
@@ -88,6 +62,15 @@ export default class UserRepository implements IUserRepository {
   public async delete(id: UserId): Promise<void> {
     await this.prisma.user.delete({
       where: { id: id.get() },
+    })
+  }
+
+  private toModel(user: Prisma.UserGetPayload<null>) {
+    return new User({
+      id: new UserId(user.id),
+      name: new UserName(user.name),
+      email: new UserEmail(user.email),
+      type: user.type,
     })
   }
 }
