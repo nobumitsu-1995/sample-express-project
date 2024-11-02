@@ -41,4 +41,8 @@ export default class Circle {
   public countMembers() {
     return this.members.length
   }
+
+  public isOwner(user: UserId) {
+    return user.get() === this.owner.get()
+  }
 }
