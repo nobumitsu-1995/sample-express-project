@@ -1,4 +1,7 @@
 import { Prisma, PrismaClient } from '@prisma/client'
+import Circle from 'Domain/Models/Circles/Circle'
+import CircleId from 'Domain/Models/Circles/CircleId'
+import CircleName from 'Domain/Models/Circles/CircleName'
 import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
 import User from 'Domain/Models/Users/User'
 import UserEmail from 'Domain/Models/Users/UserEmail'
@@ -19,6 +22,24 @@ export default class UserRepository implements IUserRepository {
     }
 
     return this.toModel(user)
+  }
+
+  public async findByIdWithCircle(
+    id: UserId,
+  ): Promise<{ user: User; circle: Circle | null } | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: id.get() },
+      include: {
+        circle: true,
+        ownedCircle: true,
+      },
+    })
+
+    if (!user) {
+      return null
+    }
+
+    return this.toModelWithCircle(user)
   }
 
   public async findByEmail(email: UserEmail): Promise<User | null> {
@@ -73,5 +94,36 @@ export default class UserRepository implements IUserRepository {
       email: new UserEmail(user.email),
       type: new UserType(user.type),
     })
+  }
+
+  private toModelWithCircle(
+    user: Prisma.UserGetPayload<{
+      include: {
+        circle: true
+      }
+    }>,
+  ) {
+    const userInstance = new User({
+      id: new UserId(user.id),
+      name: new UserName(user.name),
+      email: new UserEmail(user.email),
+      type: new UserType(user.type),
+    })
+
+    if (!user.circle) {
+      return {
+        user: userInstance,
+        circle: null,
+      }
+    }
+
+    const circleInstance = new Circle({
+      id: new CircleId(user.circle?.id),
+      name: new CircleName(user.circle?.name),
+      owner: new UserId(user.circle?.ownerId),
+      members: [],
+    })
+
+    return { user: userInstance, circle: circleInstance }
   }
 }
