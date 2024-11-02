@@ -21,6 +21,19 @@ export default class CircleRepository implements ICircleRepository {
     return this.toModel(circle)
   }
 
+  public async findByName(name: CircleName): Promise<Circle | null> {
+    const circle = await this.prisma.circle.findFirst({
+      where: { name: name.get() },
+      include: { members: true },
+    })
+
+    if (!circle) {
+      return null
+    }
+
+    return this.toModel(circle)
+  }
+
   public async searchByName(name: CircleName): Promise<Circle[]> {
     const circles = await this.prisma.circle.findMany({
       where: {
