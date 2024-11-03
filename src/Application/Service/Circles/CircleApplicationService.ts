@@ -1,5 +1,4 @@
 import CircleFactory from 'Application/Factory/CircleFactory'
-import Circle from 'Domain/Models/Circles/Circle'
 import CircleId from 'Domain/Models/Circles/CircleId'
 import CircleName from 'Domain/Models/Circles/CircleName'
 import { ICircleRepository } from 'Domain/Models/Circles/ICircleRepository'
@@ -7,6 +6,8 @@ import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
 import UserId from 'Domain/Models/Users/UserId'
 import CircleService from 'Domain/Services/CircleService'
 import UserService from 'Domain/Services/UserService'
+import CircleGetCommand from './get/CircleGetCommand'
+import CircleGetDTO from './get/CircleGetDTO'
 
 const CIRCLE_NOT_FOUND_ERROR = 'サークルが見つかりませんでした。'
 const CIRCLE_DUPLICATE_NAME_ERROR = 'このサークル名はすでに使用されています。'
@@ -44,10 +45,11 @@ export default class CircleApplicationService {
     this.circleFactory = circleFactory
   }
 
-  public async get(id: string): Promise<Circle | null> {
-    const circleId = new CircleId(id)
-    const circle = await this.circleRepository.findById(circleId)
-    return circle
+  public async get(command: CircleGetCommand): Promise<CircleGetDTO | null> {
+    const circleId = new CircleId(command.id)
+    const data = await this.circleRepository.findByIdWithUsersData(circleId)
+
+    return data === null ? null : new CircleGetDTO(data)
   }
 
   public async create(args: {
