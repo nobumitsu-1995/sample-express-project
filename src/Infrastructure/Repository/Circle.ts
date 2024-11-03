@@ -1,12 +1,22 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import Circle from 'Domain/Models/Circles/Circle'
 import CircleId from 'Domain/Models/Circles/CircleId'
 import CircleName from 'Domain/Models/Circles/CircleName'
+import { ICircleFactory } from 'Domain/Models/Circles/ICircleFactory'
 import { ICircleRepository } from 'Domain/Models/Circles/ICircleRepository'
-import UserId from 'Domain/Models/Users/UserId'
 
+type CircleRepositoryProps = {
+  prisma: PrismaClient
+  circleFactory: ICircleFactory
+}
 export default class CircleRepository implements ICircleRepository {
-  private prisma = new PrismaClient()
+  private readonly prisma: PrismaClient
+  private readonly circleFactory: ICircleFactory
+
+  constructor({ prisma, circleFactory }: CircleRepositoryProps) {
+    this.prisma = prisma
+    this.circleFactory = circleFactory
+  }
 
   public async findById(id: CircleId): Promise<Circle | null> {
     const circle = await this.prisma.circle.findUnique({
@@ -18,7 +28,25 @@ export default class CircleRepository implements ICircleRepository {
       return null
     }
 
-    return this.toModel(circle)
+    return this.circleFactory.createFromData(circle)
+  }
+
+  public async findByIdWithUsersData(id: CircleId) {
+    const circle = await this.prisma.circle.findUnique({
+      where: { id: id.get() },
+      include: {
+        owner: true,
+        members: true,
+      },
+    })
+
+    if (!circle) {
+      return null
+    }
+
+    return this.circleFactory.createFromDataWithUsersData({
+      ...circle,
+    })
   }
 
   public async findByName(name: CircleName): Promise<Circle | null> {
@@ -31,7 +59,7 @@ export default class CircleRepository implements ICircleRepository {
       return null
     }
 
-    return this.toModel(circle)
+    return this.circleFactory.createFromData(circle)
   }
 
   public async searchByName(name: CircleName): Promise<Circle[]> {
@@ -45,7 +73,7 @@ export default class CircleRepository implements ICircleRepository {
       include: { members: true },
     })
 
-    return circles.map((circle) => this.toModel(circle))
+    return circles.map((circle) => this.circleFactory.createFromData(circle))
   }
   public async save(circle: Circle) {
     await this.prisma.circle.upsert({
@@ -74,17 +102,6 @@ export default class CircleRepository implements ICircleRepository {
   public async delete(id: CircleId) {
     await this.prisma.circle.delete({
       where: { id: id.get() },
-    })
-  }
-
-  private toModel(
-    circle: Prisma.CircleGetPayload<{ include: { members: true } }>,
-  ): Circle {
-    return new Circle({
-      id: new CircleId(circle.id),
-      name: new CircleName(circle.name),
-      owner: new UserId(circle.ownerId),
-      members: circle?.members.map((member) => new UserId(member.id)) || [],
     })
   }
 }
