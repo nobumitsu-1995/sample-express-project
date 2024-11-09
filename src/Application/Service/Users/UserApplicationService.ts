@@ -1,8 +1,8 @@
-import { IUserFactory } from 'Domain/Models/Users/IUserFactory'
-import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
-import User from 'Domain/Models/Users/User'
-import UserId from 'Domain/Models/Users/UserId'
-import UserService from 'Domain/Services/UserService'
+import { IUserFactory } from '@Domain/Models/Users/IUserFactory'
+import { IUserRepository } from '@Domain/Models/Users/IUserRepository'
+import User from '@Domain/Models/Users/User'
+import UserId from '@Domain/Models/Users/UserId'
+import UserService from '@Domain/Services/UserService'
 
 const USER_NOT_FOUND_ERROR = 'ユーザーが見つかりませんでした。'
 const USER_DUPLICATE_EMAIL_ERROR = 'このEmailはすでに使用されています。'

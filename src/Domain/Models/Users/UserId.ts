@@ -1,13 +1,11 @@
-import { type UUID } from 'Infrastructure/UUID'
-
 export default class UserId {
-  private readonly id: UUID
+  private readonly id: string
 
-  constructor(id: UUID) {
+  constructor(id: string) {
     this.id = id
   }
 
-  public get(): UUID {
+  public get(): string {
     return this.id
   }
 }

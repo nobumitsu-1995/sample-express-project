@@ -1,15 +1,15 @@
-import Circle from 'Domain/Models/Circles/Circle'
-import CircleId from 'Domain/Models/Circles/CircleId'
-import CircleName from 'Domain/Models/Circles/CircleName'
+import Circle from '@Domain/Models/Circles/Circle'
+import CircleId from '@Domain/Models/Circles/CircleId'
+import CircleName from '@Domain/Models/Circles/CircleName'
 import {
   CircleData,
   CircleDataWithOwner,
   ICircleFactory,
   type CircleCreateArgs,
-} from 'Domain/Models/Circles/ICircleFactory'
-import { IUserFactory } from 'Domain/Models/Users/IUserFactory'
-import User from 'Domain/Models/Users/User'
-import UserId from 'Domain/Models/Users/UserId'
+} from '@Domain/Models/Circles/ICircleFactory'
+import { IUserFactory } from '@Domain/Models/Users/IUserFactory'
+import User from '@Domain/Models/Users/User'
+import UserId from '@Domain/Models/Users/UserId'
 
 type CircleFactoryProps = {
   generateUUID: () => string

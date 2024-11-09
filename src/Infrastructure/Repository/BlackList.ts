@@ -1,9 +1,9 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import BlackList from 'Domain/Models/Circles/BlackList/BlackList'
-import BlackListId from 'Domain/Models/Circles/BlackList/BlackListId'
-import { IBlackListRepository } from 'Domain/Models/Circles/BlackList/IBlackListRepository'
-import CircleId from 'Domain/Models/Circles/CircleId'
-import UserId from 'Domain/Models/Users/UserId'
+import BlackList from '@Domain/Models/Circles/BlackList/BlackList'
+import BlackListId from '@Domain/Models/Circles/BlackList/BlackListId'
+import { IBlackListRepository } from '@Domain/Models/Circles/BlackList/IBlackListRepository'
+import CircleId from '@Domain/Models/Circles/CircleId'
+import UserId from '@Domain/Models/Users/UserId'
 
 export default class BlackListRepository implements IBlackListRepository {
   private prisma = new PrismaClient()

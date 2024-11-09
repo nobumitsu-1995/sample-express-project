@@ -1,4 +1,4 @@
-import UserId from 'Domain/Models/Users/UserId'
+import UserId from '@Domain/Models/Users/UserId'
 import BlackListId from './BlackListId'
 import CircleId from '../CircleId'
 

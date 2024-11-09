@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client'
-import Circle from 'Domain/Models/Circles/Circle'
-import CircleId from 'Domain/Models/Circles/CircleId'
-import CircleName from 'Domain/Models/Circles/CircleName'
-import { ICircleFactory } from 'Domain/Models/Circles/ICircleFactory'
-import { ICircleRepository } from 'Domain/Models/Circles/ICircleRepository'
+import Circle from '@Domain/Models/Circles/Circle'
+import CircleId from '@Domain/Models/Circles/CircleId'
+import CircleName from '@Domain/Models/Circles/CircleName'
+import { ICircleFactory } from '@Domain/Models/Circles/ICircleFactory'
+import { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
 
 type CircleRepositoryProps = {
   prisma: PrismaClient

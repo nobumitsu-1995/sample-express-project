@@ -1,13 +1,13 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import Circle from 'Domain/Models/Circles/Circle'
-import CircleId from 'Domain/Models/Circles/CircleId'
-import CircleName from 'Domain/Models/Circles/CircleName'
-import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
-import User from 'Domain/Models/Users/User'
-import UserEmail from 'Domain/Models/Users/UserEmail'
-import UserId from 'Domain/Models/Users/UserId'
-import UserName from 'Domain/Models/Users/UserName'
-import UserType from 'Domain/Models/Users/UserType'
+import Circle from '@Domain/Models/Circles/Circle'
+import CircleId from '@Domain/Models/Circles/CircleId'
+import CircleName from '@Domain/Models/Circles/CircleName'
+import { IUserRepository } from '@Domain/Models/Users/IUserRepository'
+import User from '@Domain/Models/Users/User'
+import UserEmail from '@Domain/Models/Users/UserEmail'
+import UserId from '@Domain/Models/Users/UserId'
+import UserName from '@Domain/Models/Users/UserName'
+import UserType from '@Domain/Models/Users/UserType'
 
 export default class UserRepository implements IUserRepository {
   private prisma = new PrismaClient()
