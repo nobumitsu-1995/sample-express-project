@@ -1,5 +1,5 @@
-import Circle from 'Domain/Models/Circles/Circle'
-import User from 'Domain/Models/Users/User'
+import Circle from '@Domain/Models/Circles/Circle'
+import User from '@Domain/Models/Users/User'
 
 type CircleGetDTOProps = {
   circle: Circle

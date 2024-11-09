@@ -1,13 +1,18 @@
-import CircleFactory from 'Application/Factory/CircleFactory'
-import CircleId from 'Domain/Models/Circles/CircleId'
-import CircleName from 'Domain/Models/Circles/CircleName'
-import { ICircleRepository } from 'Domain/Models/Circles/ICircleRepository'
-import { IUserRepository } from 'Domain/Models/Users/IUserRepository'
-import UserId from 'Domain/Models/Users/UserId'
-import CircleService from 'Domain/Services/CircleService'
-import UserService from 'Domain/Services/UserService'
+import CircleFactory from '@Application/Factory/CircleFactory'
+import CircleId from '@Domain/Models/Circles/CircleId'
+import CircleName from '@Domain/Models/Circles/CircleName'
+import { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
+import { IUserRepository } from '@Domain/Models/Users/IUserRepository'
+import UserId from '@Domain/Models/Users/UserId'
+import CircleService from '@Domain/Services/CircleService'
+import UserService from '@Domain/Services/UserService'
 import CircleGetCommand from './get/CircleGetCommand'
 import CircleGetDTO from './get/CircleGetDTO'
+import CircleCreateCommand from './create/CircleCreateCommand'
+import CircleNameChangeCommand from './update/CircleNameChangeCommand'
+import CircleJoinCommand from './update/CircleJoinCommand'
+import CircleWithdrawalCommand from './update/CircleWithdrawalCommand'
+import CircleDeleteCommand from './delete/CircleDeleteCommand'
 
 const CIRCLE_NOT_FOUND_ERROR = 'サークルが見つかりませんでした。'
 const CIRCLE_DUPLICATE_NAME_ERROR = 'このサークル名はすでに使用されています。'
@@ -52,12 +57,8 @@ export default class CircleApplicationService {
     return data === null ? null : new CircleGetDTO(data)
   }
 
-  public async create(args: {
-    name: string
-    owner: string
-    members: string[]
-  }) {
-    const circle = this.circleFactory.create(args)
+  public async create(command: CircleCreateCommand) {
+    const circle = this.circleFactory.create(command)
     const isDuplicated = await this.circleService.DuplicateName(circle.name)
 
     if (isDuplicated) {
@@ -74,15 +75,15 @@ export default class CircleApplicationService {
     return
   }
 
-  public async updateName({ id, name }: { id: string; name: string }) {
-    const circleId = new CircleId(id)
+  public async updateName(command: CircleNameChangeCommand) {
+    const circleId = new CircleId(command.id)
     const circle = await this.circleRepository.findById(circleId)
 
     if (circle === null) {
       throw new Error(CIRCLE_NOT_FOUND_ERROR)
     }
 
-    const circleName = new CircleName(name)
+    const circleName = new CircleName(command.name)
     const isDuplicated = await this.circleService.DuplicateName(circleName)
 
     if (isDuplicated) {
@@ -94,15 +95,15 @@ export default class CircleApplicationService {
     return
   }
 
-  public async join({ id, userId }: { id: string; userId: string }) {
-    const circleId = new CircleId(id)
+  public async join(command: CircleJoinCommand) {
+    const circleId = new CircleId(command.id)
     const circle = await this.circleRepository.findById(circleId)
 
     if (circle === null) {
       throw new Error(CIRCLE_NOT_FOUND_ERROR)
     }
 
-    const joinUserId = new UserId(userId)
+    const joinUserId = new UserId(command.userId)
     const user = await this.userRepository.findByIdWithCircle(joinUserId)
 
     if (user === null) {
@@ -118,15 +119,15 @@ export default class CircleApplicationService {
     return
   }
 
-  public async withdrawal({ id, userId }: { id: string; userId: string }) {
-    const circleId = new CircleId(id)
+  public async withdrawal(command: CircleWithdrawalCommand) {
+    const circleId = new CircleId(command.id)
     const circle = await this.circleRepository.findById(circleId)
 
     if (circle === null) {
       throw new Error(CIRCLE_NOT_FOUND_ERROR)
     }
 
-    const withdrawalUserId = new UserId(userId)
+    const withdrawalUserId = new UserId(command.userId)
     const user = await this.userRepository.findById(withdrawalUserId)
     const isOwner = circle.isOwner(withdrawalUserId)
 
@@ -142,8 +143,8 @@ export default class CircleApplicationService {
     return
   }
 
-  public async delete(id: string) {
-    const circleId = new CircleId(id)
+  public async delete(command: CircleDeleteCommand) {
+    const circleId = new CircleId(command.id)
     this.circleRepository.delete(circleId)
     return
   }
