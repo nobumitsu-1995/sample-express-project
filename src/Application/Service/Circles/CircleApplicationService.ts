@@ -138,8 +138,7 @@ export default class CircleApplicationService {
       throw new Error(CIRCLE_OWNER_CAN_NOT_WITHDRAWAL_ERROR)
     }
 
-    circle.withdrawal(user.id)
-    this.circleRepository.save(circle)
+    this.circleRepository.disconnectMember(circleId, withdrawalUserId)
     return
   }
 
