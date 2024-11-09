@@ -47,11 +47,11 @@ export default class CircleController {
     this.circleApplicationService
       .get(command)
       .then((circle) => {
-        res.status(200).json(circle)
+        return res.status(200).json(circle)
       })
       .catch((e) => {
         console.log(e)
-        res.status(404).json(e)
+        return res.status(404).json(e)
       })
   }
 
@@ -62,10 +62,11 @@ export default class CircleController {
     this.circleApplicationService
       .create(command)
       .then(() => {
-        res.status(201).json()
+        return res.status(201).json()
       })
       .catch((e) => {
-        res.status(500).json(e)
+        console.log(e)
+        return res.status(500).json(e)
       })
   }
 
@@ -77,10 +78,11 @@ export default class CircleController {
     this.circleApplicationService
       .updateName(command)
       .then(() => {
-        res.status(200).json()
+        return res.status(200).json()
       })
       .catch((e) => {
-        res.status(500).json(e)
+        console.log(e)
+        return res.status(500).json(e)
       })
   }
 
@@ -92,10 +94,11 @@ export default class CircleController {
     this.circleApplicationService
       .join(command)
       .then(() => {
-        res.status(200).json()
+        return res.status(200).json()
       })
       .catch((e) => {
-        res.status(500).json(e)
+        console.log(e)
+        return res.status(500).json(e)
       })
   }
 
@@ -107,10 +110,11 @@ export default class CircleController {
     this.circleApplicationService
       .withdrawal(command)
       .then(() => {
-        res.status(200).json()
+        return res.status(200).json()
       })
       .catch((e) => {
-        res.status(500).json(e)
+        console.log(e)
+        return res.status(500).json(e)
       })
   }
 
@@ -121,10 +125,11 @@ export default class CircleController {
     this.circleApplicationService
       .delete(command)
       .then(() => {
-        res.status(200).json()
+        return res.status(200).json()
       })
       .catch((e) => {
-        res.status(500).json(e)
+        console.log(e)
+        return res.status(500).json(e)
       })
   }
 }
