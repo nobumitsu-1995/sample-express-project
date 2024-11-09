@@ -8,16 +8,18 @@
     "rootDir": "./src",
     "baseUrl": "src",
     "paths": {
-      "@Controllers/*": ["Application/Controllers/*"],
-      "@Usecases/*": ["Application/Usecases/*"],
-      "@Entities/*": ["Domain/Entities/*"],
-      "@Repositories/*": ["Domain/Repositories/*"],
-      "@Databases/*": ["Infrastructure/Databases/*"],
-      "@Routers/*": ["Infrastructure/Routers/*"]
+      "@Application/*": ["Application/*"],
+      "@Domain/*": ["Domain/*"],
+      "@Infrastructure/*": ["Infrastructure/*"]
     },
-    "esModuleInterop": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "esModuleInterop": true
   },
-  "include": ["src/**/*", "eslint.config.mjs", "prisma/seed.ts"],
+  "include": [
+    "src/**/*",
+    "eslint.config.mjs",
+    "prisma/seed.ts",
+    "vite.config.ts"
+  ],
   "exclude": ["dist", "node_modules"]
 }

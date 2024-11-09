@@ -5,7 +5,7 @@ import boundaries from 'eslint-plugin-boundaries'
 
 export default [
   { files: ['**/*.ts'] },
-  { ignores: ['dist/**/*', 'vite.config.ts'] },
+  { ignores: ['dist/**/*'] },
   {
     languageOptions: {
       parser,

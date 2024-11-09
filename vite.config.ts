@@ -4,12 +4,9 @@ import path from 'path'
 export default defineConfig({
   resolve: {
     alias: {
-      '@Controllers': path.resolve(__dirname, 'src/Application/Controllers'),
-      '@Usecases': path.resolve(__dirname, 'src/Application/Usecases'),
-      '@Entities': path.resolve(__dirname, 'src/Domain/Entities'),
-      '@Repositories': path.resolve(__dirname, 'src/Domain/Repositories'),
-      '@Databases': path.resolve(__dirname, 'src/Infrastructure/Databases'),
-      '@Routers': path.resolve(__dirname, 'src/Infrastructure/Routers'),
+      '@Application': path.resolve(__dirname, 'src/Application'),
+      '@Domain': path.resolve(__dirname, 'src/Domain'),
+      '@Infrastructure': path.resolve(__dirname, 'src/Infrastructure'),
     },
   },
   build: {
