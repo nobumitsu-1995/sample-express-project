@@ -4,6 +4,7 @@ import CircleId from '@Domain/Models/Circles/CircleId'
 import CircleName from '@Domain/Models/Circles/CircleName'
 import { ICircleFactory } from '@Domain/Models/Circles/ICircleFactory'
 import { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
+import UserId from '@Domain/Models/Users/UserId'
 
 type CircleRepositoryProps = {
   prisma: PrismaClient
@@ -74,6 +75,19 @@ export default class CircleRepository implements ICircleRepository {
     })
 
     return circles.map((circle) => this.circleFactory.createFromData(circle))
+  }
+
+  public async disconnectMember(id: CircleId, userId: UserId) {
+    await this.prisma.circle.update({
+      where: { id: id.get() },
+      data: {
+        members: {
+          disconnect: {
+            id: userId.get(),
+          },
+        },
+      },
+    })
   }
   public async save(circle: Circle) {
     await this.prisma.circle.upsert({

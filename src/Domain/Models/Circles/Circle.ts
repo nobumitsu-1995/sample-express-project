@@ -31,7 +31,9 @@ export default class Circle {
   }
 
   public withdrawal(user: UserId) {
-    this.members = this.members.filter((memberId) => memberId !== user)
+    this.members = this.members.filter(
+      (memberId) => memberId.get() !== user.get(),
+    )
   }
 
   public getMembers(containsOwner = true) {
