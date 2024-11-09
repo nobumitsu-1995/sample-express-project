@@ -20,6 +20,6 @@ export default class UserService {
 
   async canJoinCircle(userId: UserId): Promise<boolean> {
     const user = await this.userRepository.findByIdWithCircle(userId)
-    return !!user?.circle
+    return !user?.circle
   }
 }
