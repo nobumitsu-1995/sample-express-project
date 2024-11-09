@@ -25,7 +25,7 @@ model User {
   name          String
   type          UserType        @default(normal)
   circle        Circle?         @relation("CircleMembers", fields: [circleId], references: [id])
-  circleId      String?         @unique
+  circleId      String?
   ownedCircle   Circle?         @relation("CircleOwner")
   blackLists    BlackList[]     @relation("UserBlackLists")
   UserBlackList UserBlackList[]
