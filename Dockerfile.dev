@@ -1,12 +1,10 @@
-FROM node:20.17.0 AS builder
+FROM node:20.17.0
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-RUN npm run build
-
-CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "npm run dev & npm run db:preview"]
