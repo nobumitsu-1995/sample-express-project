@@ -6,7 +6,7 @@
     "test:coverage": "vitest run --coverage",
     "build": "vite build",
     "start": "node dist/sample-express-project.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/main.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node --transpile-only -r ./node_modules/tsconfig-paths/register src/main.ts",
     "prepare": "husky",
     "lint": "eslint ./src/**/*.ts && prettier --write ./src/**/*.ts",
     "db:migrate": "prisma migrate dev --name $npm_config_name",
@@ -15,8 +15,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
-    "express": "^4.19.2",
-    "uuid": "^10.0.0"
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
@@ -24,7 +23,6 @@
     "@types/jest": "^29.5.12",
     "@types/node": "^22.5.1",
     "@types/supertest": "^6.0.2",
-    "@types/uuid": "^10.0.0",
     "@vitest/coverage-v8": "^2.0.5",
     "eslint": "^9.9.1",
     "eslint-plugin-boundaries": "^4.2.2",
@@ -34,6 +32,7 @@
     "prisma": "^5.19.1",
     "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.4.0",
     "vite": "^5.4.2",
