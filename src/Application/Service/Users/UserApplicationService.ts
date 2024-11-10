@@ -1,8 +1,13 @@
 import { IUserFactory } from '@Domain/Models/Users/IUserFactory'
 import { IUserRepository } from '@Domain/Models/Users/IUserRepository'
-import User from '@Domain/Models/Users/User'
 import UserId from '@Domain/Models/Users/UserId'
 import UserService from '@Domain/Services/UserService'
+import UserGetAllDTO from './get/UserGetAllDTO'
+import UserGetCommand from './get/UserGetCommand'
+import UserGetDTO from './get/UserGetDTO'
+import UserCreateCommand from './create/UserCreateCommand'
+import UserUpdateCommand from './update/UserUpdateCommand'
+import UserDeleteCommand from './delete/UserDeleteCommand'
 
 const USER_NOT_FOUND_ERROR = 'ユーザーが見つかりませんでした。'
 const USER_DUPLICATE_EMAIL_ERROR = 'このEmailはすでに使用されています。'
@@ -28,19 +33,19 @@ export default class UserApplicationService {
     this.userFactory = userFactory
   }
 
-  public async getAll(): Promise<User[]> {
+  public async getAll(): Promise<UserGetAllDTO> {
     const users = await this.userRepository.findAll()
-    return users
+    return new UserGetAllDTO({ users })
   }
 
-  public async get(id: string): Promise<User | null> {
-    const userId = new UserId(id)
+  public async get(command: UserGetCommand): Promise<UserGetDTO | null> {
+    const userId = new UserId(command.id)
     const user = await this.userRepository.findById(userId)
-    return user
+    return user ? new UserGetDTO({ user }) : null
   }
 
-  public async create(args: { name: string; email: string; type?: string }) {
-    const user = this.userFactory.create(args)
+  public async create(command: UserCreateCommand) {
+    const user = this.userFactory.create(command)
     const isDuplicated = await this.userService.DuplicateEmail(user.email)
 
     if (isDuplicated) {
@@ -51,20 +56,15 @@ export default class UserApplicationService {
     return
   }
 
-  public async update(args: {
-    id: string
-    name: string
-    email: string
-    type?: string
-  }) {
-    const userId = new UserId(args.id)
+  public async update(command: UserUpdateCommand) {
+    const userId = new UserId(command.id)
     const isExistUser = (await this.userRepository.findById(userId)) === null
 
     if (!isExistUser) {
       throw new Error(USER_NOT_FOUND_ERROR)
     }
 
-    const user = this.userFactory.create(args)
+    const user = this.userFactory.create(command)
     const isDuplicated = await this.userService.DuplicateEmail(user.email)
 
     if (isDuplicated) {
@@ -75,8 +75,8 @@ export default class UserApplicationService {
     return
   }
 
-  public async delete(id: string) {
-    const userId = new UserId(id)
+  public async delete(command: UserDeleteCommand) {
+    const userId = new UserId(command.id)
     this.userRepository.delete(userId)
     return
   }
