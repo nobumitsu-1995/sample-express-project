@@ -41,95 +41,83 @@ export default class CircleController {
   }
 
   public get = async (req: Request, res: Response) => {
-    const id = req.params.id
-    const command = new CircleGetCommand({ id })
+    try {
+      const id = req.params.id
+      const command = new CircleGetCommand({ id })
+      const circle = await this.circleApplicationService.get(command)
 
-    this.circleApplicationService
-      .get(command)
-      .then((circle) => {
-        return res.status(200).json(circle)
-      })
-      .catch((e) => {
-        console.log(e)
-        return res.status(404).json(e)
-      })
+      return res.status(200).json(circle)
+    } catch (error) {
+      console.log(error)
+      return res.status(404).json(error)
+    }
   }
 
   public create = async (req: Request, res: Response) => {
-    const bodyParams = req.body
-    const command = new CircleCreateCommand(bodyParams)
+    try {
+      const bodyParams = req.body
+      const command = new CircleCreateCommand(bodyParams)
+      this.circleApplicationService.create(command)
 
-    this.circleApplicationService
-      .create(command)
-      .then(() => {
-        return res.status(201).json()
-      })
-      .catch((e) => {
-        console.log(e)
-        return res.status(500).json(e)
-      })
+      return res.status(201).json()
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error)
+    }
   }
 
   public updateName = async (req: Request, res: Response) => {
-    const id = req.params.id
-    const { name } = req.body
-    const command = new CircleNameChangeCommand({ id, name })
+    try {
+      const id = req.params.id
+      const { name } = req.body
+      const command = new CircleNameChangeCommand({ id, name })
+      this.circleApplicationService.updateName(command)
 
-    this.circleApplicationService
-      .updateName(command)
-      .then(() => {
-        return res.status(200).json()
-      })
-      .catch((e) => {
-        console.log(e)
-        return res.status(500).json(e)
-      })
+      return res.status(200).json()
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error)
+    }
   }
 
   public join = async (req: Request, res: Response) => {
-    const id = req.params.id
-    const userId = req.params.userId
-    const command = new CircleJoinCommand({ id, userId })
+    try {
+      const id = req.params.id
+      const userId = req.params.userId
+      const command = new CircleJoinCommand({ id, userId })
+      this.circleApplicationService.join(command)
 
-    this.circleApplicationService
-      .join(command)
-      .then(() => {
-        return res.status(200).json()
-      })
-      .catch((e) => {
-        console.log(e)
-        return res.status(500).json(e)
-      })
+      return res.status(200).json()
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error)
+    }
   }
 
   public withdrawal = async (req: Request, res: Response) => {
-    const id = req.params.id
-    const userId = req.params.userId
-    const command = new CircleWithdrawalCommand({ id, userId })
+    try {
+      const id = req.params.id
+      const userId = req.params.userId
+      const command = new CircleWithdrawalCommand({ id, userId })
+      this.circleApplicationService.withdrawal(command)
 
-    this.circleApplicationService
-      .withdrawal(command)
-      .then(() => {
-        return res.status(200).json()
-      })
-      .catch((e) => {
-        console.log(e)
-        return res.status(500).json(e)
-      })
+      return res.status(200).json()
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error)
+    }
   }
 
   public delete = async (req: Request, res: Response) => {
-    const id = req.params.id
-    const command = new CircleDeleteCommand({ id })
+    try {
+      const id = req.params.id
+      const command = new CircleDeleteCommand({ id })
+      this.circleApplicationService.delete(command)
 
-    this.circleApplicationService
-      .delete(command)
-      .then(() => {
-        return res.status(200).json()
-      })
-      .catch((e) => {
-        console.log(e)
-        return res.status(500).json(e)
-      })
+      return res.status(200).json()
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error)
+    }
   }
 }
