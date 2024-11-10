@@ -3,13 +3,13 @@ import UserEmail from '@Domain/Models/Users/UserEmail'
 import UserId from '@Domain/Models/Users/UserId'
 
 type UserServiceProps = {
-  repository: IUserRepository
+  userRepository: IUserRepository
 }
 export default class UserService {
   private readonly userRepository: IUserRepository
 
-  constructor({ repository }: UserServiceProps) {
-    this.userRepository = repository
+  constructor({ userRepository }: UserServiceProps) {
+    this.userRepository = userRepository
   }
 
   public async DuplicateEmail(email: UserEmail) {

@@ -25,7 +25,7 @@ export default class CircleController {
     const circleRepository = new CircleRepository({ prisma, circleFactory })
     const userRepository = new UserRepository()
 
-    const userService = new UserService({ repository: userRepository })
+    const userService = new UserService({ userRepository })
     const circleService = new CircleService({
       circleRepository,
       userRepository,
@@ -57,7 +57,7 @@ export default class CircleController {
     try {
       const bodyParams = req.body
       const command = new CircleCreateCommand(bodyParams)
-      this.circleApplicationService.create(command)
+      await this.circleApplicationService.create(command)
 
       return res.status(201).json()
     } catch (error) {
@@ -71,7 +71,7 @@ export default class CircleController {
       const id = req.params.id
       const { name } = req.body
       const command = new CircleNameChangeCommand({ id, name })
-      this.circleApplicationService.updateName(command)
+      await this.circleApplicationService.updateName(command)
 
       return res.status(200).json()
     } catch (error) {
@@ -85,7 +85,7 @@ export default class CircleController {
       const id = req.params.id
       const userId = req.params.userId
       const command = new CircleJoinCommand({ id, userId })
-      this.circleApplicationService.join(command)
+      await this.circleApplicationService.join(command)
 
       return res.status(200).json()
     } catch (error) {
@@ -99,7 +99,7 @@ export default class CircleController {
       const id = req.params.id
       const userId = req.params.userId
       const command = new CircleWithdrawalCommand({ id, userId })
-      this.circleApplicationService.withdrawal(command)
+      await this.circleApplicationService.withdrawal(command)
 
       return res.status(200).json()
     } catch (error) {
@@ -112,7 +112,7 @@ export default class CircleController {
     try {
       const id = req.params.id
       const command = new CircleDeleteCommand({ id })
-      this.circleApplicationService.delete(command)
+      await this.circleApplicationService.delete(command)
 
       return res.status(200).json()
     } catch (error) {
