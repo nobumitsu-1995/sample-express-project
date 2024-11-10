@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import { uuid as generateUUID } from '@Infrastructure/UUID'
 import prisma from '@Infrastructure/Prisma'
-import CircleRepository from '@Infrastructure/Repository/Circle'
-import UserRepository from '@Infrastructure/Repository/User'
+import CircleRepository from '@Infrastructure/Repository/CircleRepository'
+import UserRepository from '@Infrastructure/Repository/UserRepository'
 
 import CircleGetCommand from '@Application/Service/Circles/get/CircleGetCommand'
 import CircleCreateCommand from '@Application/Service/Circles/create/CircleCreateCommand'

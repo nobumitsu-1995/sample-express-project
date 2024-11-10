@@ -1,7 +1,7 @@
 import express from 'express'
 import os from 'os'
 import cluster from 'cluster'
-import { circleRouter } from '@Infrastructure/Router/circle'
+import { circleRouter } from '@Infrastructure/Router/circleRouter'
 
 if (cluster.isPrimary) {
   const numberOfCPUs = os.cpus().length
