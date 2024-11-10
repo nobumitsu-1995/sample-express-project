@@ -10,12 +10,13 @@ export default defineConfig({
     },
   },
   build: {
+    target: 'node20',
     lib: {
       entry: 'src/main.ts',
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['express'],
+      external: ['express', 'crypto'],
     },
     outDir: 'dist',
   },
