@@ -1,4 +1,4 @@
-import { IUserFactory } from '@Domain/Models/Users/IUserFactory'
+import type { IUserFactory } from '@Domain/Models/Users/IUserFactory'
 import User from '@Domain/Models/Users/User'
 import UserEmail from '@Domain/Models/Users/UserEmail'
 import UserId from '@Domain/Models/Users/UserId'

@@ -1,6 +1,6 @@
-import UserId from '../../Users/UserId'
-import CircleId from '../CircleId'
-import { IBlackListRepository } from './IBlackListRepository'
+import type UserId from '../../Users/UserId'
+import type CircleId from '../CircleId'
+import type { IBlackListRepository } from './IBlackListRepository'
 
 type BlackListSpecificationProps = {
   blackListRepository: IBlackListRepository

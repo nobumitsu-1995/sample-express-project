@@ -1,14 +1,14 @@
 import Circle from '@Domain/Models/Circles/Circle'
 import CircleId from '@Domain/Models/Circles/CircleId'
 import CircleName from '@Domain/Models/Circles/CircleName'
-import {
+import type {
   CircleData,
   CircleDataWithOwner,
   ICircleFactory,
-  type CircleCreateArgs,
 } from '@Domain/Models/Circles/ICircleFactory'
-import { IUserFactory } from '@Domain/Models/Users/IUserFactory'
-import User from '@Domain/Models/Users/User'
+import { type CircleCreateArgs } from '@Domain/Models/Circles/ICircleFactory'
+import type { IUserFactory } from '@Domain/Models/Users/IUserFactory'
+import type User from '@Domain/Models/Users/User'
 import UserId from '@Domain/Models/Users/UserId'
 
 type CircleFactoryProps = {

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { uuid as generateUUID } from '@Infrastructure/UUID'
 import UserFactory from '@Application/Factory/UserFactory'
 import UserRepository from '@Infrastructure/Repository/UserRepository'

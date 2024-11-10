@@ -1,7 +1,7 @@
-import { IUserRepository } from '../Users/IUserRepository'
-import User from '../Users/User'
+import type { IUserRepository } from '../Users/IUserRepository'
+import type User from '../Users/User'
 import { USER_TYPE } from '../Users/UserType'
-import Circle from './Circle'
+import type Circle from './Circle'
 
 const MAX_CAPACITY = 30
 const PREMIUM_CIRCLE_BOUNDARY = 5

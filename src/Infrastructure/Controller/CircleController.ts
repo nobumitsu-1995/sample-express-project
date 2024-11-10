@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 import { uuid as generateUUID } from '@Infrastructure/UUID'
 import prisma from '@Infrastructure/Prisma'
 import CircleRepository from '@Infrastructure/Repository/CircleRepository'

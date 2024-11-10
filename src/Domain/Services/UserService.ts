@@ -1,6 +1,6 @@
-import { IUserRepository } from '@Domain/Models/Users/IUserRepository'
-import UserEmail from '@Domain/Models/Users/UserEmail'
-import UserId from '@Domain/Models/Users/UserId'
+import type { IUserRepository } from '@Domain/Models/Users/IUserRepository'
+import type UserEmail from '@Domain/Models/Users/UserEmail'
+import type UserId from '@Domain/Models/Users/UserId'
 
 type UserServiceProps = {
   userRepository: IUserRepository

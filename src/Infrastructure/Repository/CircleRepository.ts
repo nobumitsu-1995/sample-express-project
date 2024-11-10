@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client'
-import Circle from '@Domain/Models/Circles/Circle'
-import CircleId from '@Domain/Models/Circles/CircleId'
-import CircleName from '@Domain/Models/Circles/CircleName'
-import { ICircleFactory } from '@Domain/Models/Circles/ICircleFactory'
-import { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
-import UserId from '@Domain/Models/Users/UserId'
+import type { PrismaClient } from '@prisma/client'
+import type Circle from '@Domain/Models/Circles/Circle'
+import type CircleId from '@Domain/Models/Circles/CircleId'
+import type CircleName from '@Domain/Models/Circles/CircleName'
+import type { ICircleFactory } from '@Domain/Models/Circles/ICircleFactory'
+import type { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
+import type UserId from '@Domain/Models/Users/UserId'
 
 type CircleRepositoryProps = {
   prisma: PrismaClient

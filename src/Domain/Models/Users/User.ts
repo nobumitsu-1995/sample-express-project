@@ -1,6 +1,6 @@
-import UserEmail from './UserEmail'
-import UserId from './UserId'
-import UserName from './UserName'
+import type UserEmail from './UserEmail'
+import type UserId from './UserId'
+import type UserName from './UserName'
 import UserType, { USER_TYPE } from './UserType'
 
 type UserProps = {

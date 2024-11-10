@@ -1,6 +1,6 @@
-import CircleName from './CircleName'
-import CircleId from './CircleId'
-import UserId from '../Users/UserId'
+import type CircleName from './CircleName'
+import type CircleId from './CircleId'
+import type UserId from '../Users/UserId'
 
 type CircleProps = {
   id: CircleId

@@ -1,6 +1,6 @@
-import CircleName from '@Domain/Models/Circles/CircleName'
-import { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
-import { IUserRepository } from '@Domain/Models/Users/IUserRepository'
+import type CircleName from '@Domain/Models/Circles/CircleName'
+import type { ICircleRepository } from '@Domain/Models/Circles/ICircleRepository'
+import type { IUserRepository } from '@Domain/Models/Users/IUserRepository'
 
 type CircleServiceRepositoryProps = {
   circleRepository: ICircleRepository

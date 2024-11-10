@@ -1,6 +1,6 @@
-import UserId from '@Domain/Models/Users/UserId'
-import BlackListId from './BlackListId'
-import CircleId from '../CircleId'
+import type UserId from '@Domain/Models/Users/UserId'
+import type BlackListId from './BlackListId'
+import type CircleId from '../CircleId'
 
 type BlackListProps = {
   id: BlackListId

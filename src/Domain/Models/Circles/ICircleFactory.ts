@@ -1,5 +1,5 @@
-import User from '../Users/User'
-import Circle from './Circle'
+import type User from '../Users/User'
+import type Circle from './Circle'
 
 export type CircleCreateArgs = {
   id?: string

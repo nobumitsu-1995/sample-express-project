@@ -1,4 +1,4 @@
-import User from '@Domain/Models/Users/User'
+import type User from '@Domain/Models/Users/User'
 
 type UserGetDTOProps = {
   user: User

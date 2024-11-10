@@ -1,7 +1,7 @@
-import Circle from '../Circles/Circle'
-import User from './User'
-import UserEmail from './UserEmail'
-import UserId from './UserId'
+import type Circle from '../Circles/Circle'
+import type User from './User'
+import type UserEmail from './UserEmail'
+import type UserId from './UserId'
 
 export interface IUserRepository {
   findById: (id: UserId) => Promise<User | null>

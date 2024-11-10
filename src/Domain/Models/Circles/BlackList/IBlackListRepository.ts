@@ -1,6 +1,6 @@
-import BlackList from './BlackList'
-import BlackListId from './BlackListId'
-import CircleId from '../CircleId'
+import type BlackList from './BlackList'
+import type BlackListId from './BlackListId'
+import type CircleId from '../CircleId'
 
 export interface IBlackListRepository {
   findById: (id: BlackListId) => Promise<BlackList | null>
