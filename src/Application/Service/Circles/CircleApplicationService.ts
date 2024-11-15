@@ -17,8 +17,7 @@ import CircleNameAlreadyTakenError from '@Domain/Models/Circles/Error/CircleName
 import CanNotJoinCircleError from '@Domain/Models/Circles/Error/CanNotJoinCircleError'
 import CircleNotFoundError from '@Domain/Models/Circles/Error/CircleNotFoundError'
 import CircleOwnerCanNotWithdrawalError from '@Domain/Models/Circles/Error/CircleOwnerCanNotWithdrawalError'
-
-const USER_NOT_FOUND_ERROR = 'ユーザーが見つかりませんでした。'
+import UserNotFoundError from '@Domain/Models/Users/Error/UserNotFoundError'
 
 type CircleApplicationServiceProps = {
   circleRepository: ICircleRepository
@@ -105,7 +104,7 @@ export default class CircleApplicationService {
     const user = await this.userRepository.findByIdWithCircle(joinUserId)
 
     if (user === null) {
-      throw new Error(USER_NOT_FOUND_ERROR)
+      throw new UserNotFoundError()
     }
 
     if (user.circle !== null) {
@@ -130,7 +129,7 @@ export default class CircleApplicationService {
     const isOwner = circle.isOwner(withdrawalUserId)
 
     if (user === null) {
-      throw new Error(USER_NOT_FOUND_ERROR)
+      throw new UserNotFoundError()
     }
     if (isOwner) {
       throw new CircleOwnerCanNotWithdrawalError()

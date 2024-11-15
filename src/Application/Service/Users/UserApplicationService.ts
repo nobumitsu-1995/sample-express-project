@@ -8,9 +8,8 @@ import UserGetDTO from './get/UserGetDTO'
 import type UserCreateCommand from './create/UserCreateCommand'
 import type UserUpdateCommand from './update/UserUpdateCommand'
 import type UserDeleteCommand from './delete/UserDeleteCommand'
-
-const USER_NOT_FOUND_ERROR = 'ユーザーが見つかりませんでした。'
-const USER_DUPLICATE_EMAIL_ERROR = 'このEmailはすでに使用されています。'
+import UserDuplicateEmailError from '@Domain/Models/Users/Error/UserDuplicateEmailError'
+import UserNotFoundError from '@Domain/Models/Users/Error/UserNotFoundError'
 
 type UserApplicationServiceProps = {
   userRepository: IUserRepository
@@ -49,7 +48,7 @@ export default class UserApplicationService {
     const isDuplicated = await this.userService.DuplicateEmail(user.email)
 
     if (isDuplicated) {
-      throw new Error(USER_DUPLICATE_EMAIL_ERROR)
+      throw new UserDuplicateEmailError()
     }
 
     this.userRepository.save(user)
@@ -61,14 +60,14 @@ export default class UserApplicationService {
     const isExistUser = (await this.userRepository.findById(userId)) === null
 
     if (!isExistUser) {
-      throw new Error(USER_NOT_FOUND_ERROR)
+      throw new UserNotFoundError()
     }
 
     const user = this.userFactory.create(command)
     const isDuplicated = await this.userService.DuplicateEmail(user.email)
 
     if (isDuplicated) {
-      throw new Error(USER_DUPLICATE_EMAIL_ERROR)
+      throw new UserDuplicateEmailError()
     }
 
     this.userRepository.save(user)
