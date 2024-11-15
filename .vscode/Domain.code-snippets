@@ -1,0 +1,20 @@
+{
+  "エラークラスの作成": {
+    "prefix": "error",
+    "body": [
+      "const ${1:$TM_FILENAME_BASE} =",
+      "  '${2:message}'",
+      "",
+      "export default class ${TM_FILENAME_BASE} extends Error {",
+      "  statusCode: number",
+      "  constructor() {",
+      "    super(${1:$TM_FILENAME_BASE})",
+      "    this.name = '${TM_FILENAME_BASE}'",
+      "    this.statusCode = ${3:statusCode}",
+      "  }",
+      "}",
+      "",
+    ],
+    "description": "エラークラスの作成",
+  },
+}
