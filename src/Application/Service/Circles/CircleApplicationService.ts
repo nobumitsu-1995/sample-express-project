@@ -13,13 +13,11 @@ import type CircleNameChangeCommand from './update/CircleNameChangeCommand'
 import type CircleJoinCommand from './update/CircleJoinCommand'
 import type CircleWithdrawalCommand from './update/CircleWithdrawalCommand'
 import type CircleDeleteCommand from './delete/CircleDeleteCommand'
+import CircleNameAlreadyTakenError from '@Domain/Models/Circles/Error/CircleNameAlreadyTakenError'
+import CanNotJoinCircleError from '@Domain/Models/Circles/Error/CanNotJoinCircleError'
+import CircleNotFoundError from '@Domain/Models/Circles/Error/CircleNotFoundError'
+import CircleOwnerCanNotWithdrawalError from '@Domain/Models/Circles/Error/CircleOwnerCanNotWithdrawalError'
 
-const CIRCLE_NOT_FOUND_ERROR = 'サークルが見つかりませんでした。'
-const CIRCLE_DUPLICATE_NAME_ERROR = 'このサークル名はすでに使用されています。'
-const CAN_NOT_JOIN_CIRCLE_ERROR =
-  'すでにサークルに参加済みの場合、他のサークルには参加できません。'
-const CIRCLE_OWNER_CAN_NOT_WITHDRAWAL_ERROR =
-  'サークルオーナーはサークルを抜けることはできません'
 const USER_NOT_FOUND_ERROR = 'ユーザーが見つかりませんでした。'
 
 type CircleApplicationServiceProps = {
@@ -62,13 +60,13 @@ export default class CircleApplicationService {
     const isDuplicated = await this.circleService.DuplicateName(circle.name)
 
     if (isDuplicated) {
-      throw new Error(CIRCLE_DUPLICATE_NAME_ERROR)
+      throw new CircleNameAlreadyTakenError()
     }
 
     const canJoinCircle = await this.userService.canJoinCircle(circle.owner)
 
     if (!canJoinCircle) {
-      throw new Error(CAN_NOT_JOIN_CIRCLE_ERROR)
+      throw new CanNotJoinCircleError()
     }
 
     this.circleRepository.save(circle)
@@ -80,14 +78,14 @@ export default class CircleApplicationService {
     const circle = await this.circleRepository.findById(circleId)
 
     if (circle === null) {
-      throw new Error(CIRCLE_NOT_FOUND_ERROR)
+      throw new CircleNotFoundError()
     }
 
     const circleName = new CircleName(command.name)
     const isDuplicated = await this.circleService.DuplicateName(circleName)
 
     if (isDuplicated) {
-      throw new Error(CIRCLE_DUPLICATE_NAME_ERROR)
+      throw new CircleNameAlreadyTakenError()
     }
 
     circle.changeName(circleName)
@@ -100,7 +98,7 @@ export default class CircleApplicationService {
     const circle = await this.circleRepository.findById(circleId)
 
     if (circle === null) {
-      throw new Error(CIRCLE_NOT_FOUND_ERROR)
+      throw new CircleNotFoundError()
     }
 
     const joinUserId = new UserId(command.userId)
@@ -111,7 +109,7 @@ export default class CircleApplicationService {
     }
 
     if (user.circle !== null) {
-      throw new Error(CAN_NOT_JOIN_CIRCLE_ERROR)
+      throw new CanNotJoinCircleError()
     }
 
     circle.join(user.user.id)
@@ -124,7 +122,7 @@ export default class CircleApplicationService {
     const circle = await this.circleRepository.findById(circleId)
 
     if (circle === null) {
-      throw new Error(CIRCLE_NOT_FOUND_ERROR)
+      throw new CircleNotFoundError()
     }
 
     const withdrawalUserId = new UserId(command.userId)
@@ -135,7 +133,7 @@ export default class CircleApplicationService {
       throw new Error(USER_NOT_FOUND_ERROR)
     }
     if (isOwner) {
-      throw new Error(CIRCLE_OWNER_CAN_NOT_WITHDRAWAL_ERROR)
+      throw new CircleOwnerCanNotWithdrawalError()
     }
 
     this.circleRepository.disconnectMember(circleId, withdrawalUserId)
