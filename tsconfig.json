@@ -13,7 +13,9 @@
       "@Infrastructure/*": ["Infrastructure/*"]
     },
     "types": ["vitest/globals"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*",

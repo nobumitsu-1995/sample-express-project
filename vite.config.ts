@@ -16,7 +16,14 @@ export default defineConfig({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: ['express', 'crypto', 'os', 'cluster'],
+      external: [
+        'express',
+        'crypto',
+        'os',
+        'cluster',
+        'inversify',
+        'reflect-metadata',
+      ],
     },
     outDir: 'dist',
   },

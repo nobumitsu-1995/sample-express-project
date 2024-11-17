@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "inversify": "^6.1.4",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

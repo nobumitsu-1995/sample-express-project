@@ -1,6 +1,6 @@
 {
   "typescript.referencesCodeLens.enabled": true,
-  "cSpell.words": ["automerge", "tseslint", "Usecases"],
+  "cSpell.words": ["automerge", "inversify", "tseslint", "Usecases"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "prettier.bracketSpacing": true,
