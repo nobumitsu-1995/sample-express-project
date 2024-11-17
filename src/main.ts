@@ -2,6 +2,7 @@ import express from 'express'
 import os from 'os'
 import cluster from 'cluster'
 import { circleRouter } from '@Infrastructure/Router/circleRouter'
+import { userRouter } from '@Infrastructure/Router/userRouter'
 
 if (cluster.isPrimary) {
   const numberOfCPUs = os.cpus().length
@@ -20,6 +21,7 @@ if (cluster.isPrimary) {
   const PORT = 3000
 
   app.use(express.json())
+  app.use('/user', userRouter)
   app.use('/circle', circleRouter)
 
   app.listen(PORT, () => {
