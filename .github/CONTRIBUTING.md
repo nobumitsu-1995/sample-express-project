@@ -4,6 +4,15 @@
 
 また、動作確認には postman が使用できるとスムーズに開発できると思います。
 
+## 環境構築手順
+
+```
+docker compose build
+docker compose up
+chmod +x ./setup_database.sh
+./setup_database.sh
+```
+
 ## 開発フロー
 
 基本的に以下サイクルで開発を行う想定です。
