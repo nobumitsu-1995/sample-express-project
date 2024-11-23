@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+import { injectable } from 'inversify'
 import type { Prisma } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
 import Circle from '@Domain/Models/Circles/Circle'
@@ -10,6 +12,7 @@ import UserId from '@Domain/Models/Users/UserId'
 import UserName from '@Domain/Models/Users/UserName'
 import UserType from '@Domain/Models/Users/UserType'
 
+@injectable()
 export default class UserRepository implements IUserRepository {
   private prisma = new PrismaClient()
 
@@ -72,7 +75,11 @@ export default class UserRepository implements IUserRepository {
   public async save(user: User): Promise<void> {
     await this.prisma.user.upsert({
       where: { id: user.id.get() },
-      update: { name: user.name.get() },
+      update: {
+        name: user.name.get(),
+        email: user.email.get(),
+        type: user.type.get(),
+      },
       create: {
         id: user.id.get(),
         name: user.name.get(),

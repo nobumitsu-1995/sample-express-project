@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import type { IUserFactory } from '@Domain/Models/Users/IUserFactory'
 import type { IUserRepository } from '@Domain/Models/Users/IUserRepository'
 import UserId from '@Domain/Models/Users/UserId'
@@ -10,27 +11,19 @@ import type UserUpdateCommand from './update/UserUpdateCommand'
 import type UserDeleteCommand from './delete/UserDeleteCommand'
 import UserDuplicateEmailError from '@Domain/Models/Users/Error/UserDuplicateEmailError'
 import UserNotFoundError from '@Domain/Models/Users/Error/UserNotFoundError'
+import { inject, injectable } from 'inversify'
+import { TYPES } from '@Infrastructure/DI/types'
 
-type UserApplicationServiceProps = {
-  userRepository: IUserRepository
-  userService: UserService
-  userFactory: IUserFactory
-}
-
+@injectable()
 export default class UserApplicationService {
-  private readonly userRepository: IUserRepository
-  private readonly userService: UserService
-  private readonly userFactory: IUserFactory
-
-  constructor({
-    userRepository,
-    userService,
-    userFactory,
-  }: UserApplicationServiceProps) {
-    this.userRepository = userRepository
-    this.userService = userService
-    this.userFactory = userFactory
-  }
+  constructor(
+    @inject(TYPES.UserRepository)
+    private readonly userRepository: IUserRepository,
+    @inject(TYPES.UserService)
+    private readonly userService: UserService,
+    @inject(TYPES.UserFactory)
+    private readonly userFactory: IUserFactory,
+  ) {}
 
   public async getAll(): Promise<UserGetAllDTO> {
     const users = await this.userRepository.findAll()
@@ -57,7 +50,7 @@ export default class UserApplicationService {
 
   public async update(command: UserUpdateCommand) {
     const userId = new UserId(command.id)
-    const isExistUser = (await this.userRepository.findById(userId)) === null
+    const isExistUser = (await this.userRepository.findById(userId)) !== null
 
     if (!isExistUser) {
       throw new UserNotFoundError()

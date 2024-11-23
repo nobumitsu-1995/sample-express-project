@@ -1,32 +1,24 @@
 import type { Request, Response } from 'express'
-import { uuid as generateUUID } from '@Infrastructure/UUID'
-import UserFactory from '@Application/Factory/UserFactory'
-import UserRepository from '@Infrastructure/Repository/UserRepository'
-import UserService from '@Domain/Services/UserService'
-import UserApplicationService from '@Application/Service/Users/UserApplicationService'
+import type UserApplicationService from '@Application/Service/Users/UserApplicationService'
 import UserGetCommand from '@Application/Service/Users/get/UserGetCommand'
 import UserCreateCommand from '@Application/Service/Users/create/UserCreateCommand'
 import UserUpdateCommand from '@Application/Service/Users/update/UserUpdateCommand'
 import UserDeleteCommand from '@Application/Service/Users/delete/UserDeleteCommand'
+import { diContainer } from '@Infrastructure/DI/diContainer'
+import { TYPES } from '@Infrastructure/DI/types'
 
 export default class UserController {
   private readonly userApplicationService: UserApplicationService
 
   constructor() {
-    const userFactory = new UserFactory(generateUUID)
-    const userRepository = new UserRepository()
-    const userService = new UserService({ userRepository })
-
-    this.userApplicationService = new UserApplicationService({
-      userFactory,
-      userRepository,
-      userService,
-    })
+    this.userApplicationService = diContainer.get<UserApplicationService>(
+      TYPES.UserApplicationService,
+    )
   }
 
-  public getAll = async (req: Request, res: Response) => {
+  public getAll = (req: Request, res: Response) => {
     try {
-      const user = await this.userApplicationService.getAll()
+      const user = this.userApplicationService.getAll()
 
       return res.status(200).json(user)
     } catch (error) {

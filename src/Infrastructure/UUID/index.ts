@@ -1,3 +1,8 @@
+import 'reflect-metadata'
 import { randomUUID } from 'crypto'
+import { injectable } from 'inversify'
 
-export const uuid = () => randomUUID()
+@injectable()
+export default class UUID {
+  public get = () => randomUUID()
+}
