@@ -12,9 +12,9 @@ type UserProps = {
 
 export default class User {
   public readonly id: UserId
-  public name: UserName
-  public email: UserEmail
-  public type: UserType
+  public readonly name: UserName
+  public readonly email: UserEmail
+  public readonly type: UserType
 
   constructor({ id, name, email, type }: UserProps) {
     this.id = id
@@ -24,14 +24,29 @@ export default class User {
   }
 
   public changeName(name: UserName) {
-    this.name = name
+    return new User({
+      id: this.id,
+      name,
+      email: this.email,
+      type: this.type,
+    })
   }
 
   public upgrade() {
-    this.type = new UserType(USER_TYPE.premium)
+    return new User({
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      type: new UserType(USER_TYPE.premium),
+    })
   }
 
   public downgrade() {
-    this.type = new UserType(USER_TYPE.normal)
+    return new User({
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      type: new UserType(USER_TYPE.normal),
+    })
   }
 }
