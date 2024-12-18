@@ -11,9 +11,9 @@ type CircleProps = {
 
 export default class Circle {
   public readonly id: CircleId
-  public name: CircleName
-  public owner: UserId
-  private members: UserId[]
+  public readonly name: CircleName
+  public readonly owner: UserId
+  private readonly members: UserId[]
 
   constructor({ id, name, owner, members }: CircleProps) {
     this.id = id
@@ -23,17 +23,34 @@ export default class Circle {
   }
 
   public changeName(name: CircleName) {
-    this.name = name
+    return new Circle({
+      id: this.id,
+      name: name,
+      owner: this.owner,
+      members: this.members,
+    })
   }
 
   public join(user: UserId) {
-    this.members = [...this.members, user]
+    return new Circle({
+      id: this.id,
+      name: this.name,
+      owner: this.owner,
+      members: [...this.members, user],
+    })
   }
 
   public withdrawal(user: UserId) {
-    this.members = this.members.filter(
+    const newMembers = this.members.filter(
       (memberId) => memberId.get() !== user.get(),
     )
+
+    return new Circle({
+      id: this.id,
+      name: this.name,
+      owner: this.owner,
+      members: newMembers,
+    })
   }
 
   public getMembers(containsOwner = true) {

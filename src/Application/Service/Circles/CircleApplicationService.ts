@@ -87,8 +87,8 @@ export default class CircleApplicationService {
       throw new CircleNameAlreadyTakenError()
     }
 
-    circle.changeName(circleName)
-    this.circleRepository.save(circle)
+    const updatedCircle = circle.changeName(circleName)
+    this.circleRepository.save(updatedCircle)
     return
   }
 
@@ -111,8 +111,8 @@ export default class CircleApplicationService {
       throw new CanNotJoinCircleError()
     }
 
-    circle.join(user.user.id)
-    this.circleRepository.save(circle)
+    const updatedCircle = circle.join(user.user.id)
+    this.circleRepository.save(updatedCircle)
     return
   }
 
