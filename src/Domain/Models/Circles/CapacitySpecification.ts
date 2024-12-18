@@ -35,6 +35,7 @@ export default class CapacitySpecification {
   }
 
   private countPremiumMember(members: User[]) {
-    return members.filter((user) => user.type === USER_TYPE.premium).length
+    return members.filter((user) => user.type.get() === USER_TYPE.premium)
+      .length
   }
 }
